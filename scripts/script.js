@@ -26,26 +26,63 @@ function update() {
         dx = -dx;
         dy += (Math.random()  - 0.5) * 2;
     }
-    if(y > canvas.height - 15 || y < 15) {
+    if(y < 15) {
         dy = -dy;
         dx += (Math.random()  - 0.5) * 2;
+    }
+    if (y > canvas.height - 15){
+        gameOver();
     }
 
 }
 
-
 function loop() {
     update();
     drawBall();
-    rafId = requestAnimationFrame(loop); // planifie la prochaine frame
+    if  (rafId) {  // si l'animation est en cours
+        rafId = requestAnimationFrame(loop);
+    }
 }
 
 // démarrer l'animation
 loop();
 
-// possibilité d'arrêter l'animation avec le bouton 'stop'
-let stopAnimation = document.getElementById('stop');
-stopAnimation.addEventListener('click', () => {
-    cancelAnimationFrame(rafId)
-})
 
+//             gestion des boutons
+
+// démarre l'animation si elle n'est pas déjà en cours
+const startButton = document.getElementById('startButton');
+startButton.addEventListener('click', () => {
+    if (!rafId) {   // si l'animation n'est pas déjà en cours
+        dx = 3;
+        dy = -3;
+        rafId   = requestAnimationFrame(loop);
+    }
+});
+
+// réinitialise la position et la vitesse de la balle
+const reinitializeButton = document.getElementById('reinitialize');
+reinitializeButton.addEventListener('click', () => {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+    resetBall();
+}
+);
+
+function resetBall() {
+    x = canvas.width / 2;
+    y = canvas.height / 2;
+    dx = 3;
+    dy = -3;
+    drawBall();
+}
+
+function gameOver() {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+     x = canvas.width / 2;
+    y = canvas.height / 2;
+    dx = 0;
+    dy = 0;
+    alert("Game Over! La balle est tombée.");
+}
