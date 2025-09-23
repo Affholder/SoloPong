@@ -1,9 +1,10 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let x = canvas.width/10+2;                      // position de la balle (axe des abscisses X)
-const y = canvas.height*0.9;     // centrage vertical dans le canvas
-let speed = 2;                 // vitesse de la balle
+let x = canvas.width/2;                      // position de la balle (axe des abscisses X)
+let y = canvas.height/2;     // centrage vertical dans le canvas
+let dx = 3;
+let dy = -3;
 let rafId;                       // identifiant de la boucle d'animation
 
 function drawBall() {
@@ -16,15 +17,22 @@ function drawBall() {
 }
 
 function update() {
-    x += speed;
+
+    x += dx;
+    y += dy;
+
     // fait rebondir la balle
-    if (x > canvas.width - 15) {
-        speed = speed*-1;
+    if (x > canvas.width - 15|| x < 15) {
+        dx = -dx;
+        dy += (Math.random()  - 0.5) * 2;
     }
-    if (x < 15) {
-        speed = speed*-1;
+    if(y > canvas.height - 15 || y < 15) {
+        dy = -dy;
+        dx += (Math.random()  - 0.5) * 2;
     }
+
 }
+
 
 function loop() {
     update();
