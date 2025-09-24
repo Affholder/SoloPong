@@ -48,6 +48,7 @@ function loop() {
 loop();
 
 
+
 //             gestion des boutons
 
 // démarre l'animation si elle n'est pas déjà en cours
@@ -57,10 +58,11 @@ startButton.addEventListener('click', () => {
         dx = 3;
         dy = -3;
         rafId   = requestAnimationFrame(loop);
+        compteurScore();
     }
 });
 
-// réinitialise la position et la vitesse de la balle
+// réinitialise la position, la vitesse de la balle et le score
 const reinitializeButton = document.getElementById('reinitialize');
 reinitializeButton.addEventListener('click', () => {
     cancelAnimationFrame(rafId);
@@ -75,6 +77,8 @@ function resetBall() {
     dx = 3;
     dy = -3;
     drawBall();
+    scoreElement = document.getElementById('score');
+    scoreElement.textContent = 'Score: 0';
 }
 
 function gameOver() {
@@ -84,5 +88,25 @@ function gameOver() {
     y = canvas.height / 2;
     dx = 0;
     dy = 0;
-    alert("Game Over! La balle est tombée.");
+    const scoreElement = document.getElementById('score');
+    alert("Game Over! La balle est tombée, votre score est de " + scoreElement.textContent.split(' ')[1]);
+    scoreElement.textContent = 'Score: 0';
 }
+let scoreInterval;
+function compteurScore() {
+    let score = 0;
+    const scoreElement = document.getElementById('score');
+    if (scoreInterval) {
+        clearInterval(scoreInterval);
+    }
+    scoreInterval = setInterval(() => {
+        if (rafId) {
+            score++;
+            scoreElement.textContent = `Score: ${score}`;
+        } else {
+            score = 0;
+        }
+    }, 1000);
+
+}
+
