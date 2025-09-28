@@ -50,6 +50,7 @@ function update() {
     }
 
     if (y > canvas.height - 15){
+        speed = baseSpeed;
         gameOver();
     }
 
@@ -139,7 +140,7 @@ function compteurScore() {
 }
 
 function startBall(){
-    const speed = 3;
+    const speed = baseSpeed;
     const angle = Math.random() * Math.PI / 2 - Math.PI / 4;
     dx = speed * Math.cos(angle);
     dy = -speed * Math.sin(angle);
@@ -161,3 +162,26 @@ function vitesseManagement(){
     dx = speed * Math.cos(angle);
     dy = speed * Math.sin(angle);
 }
+
+canvas.addEventListener('touchmove', (event) => {
+    const touch = event.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    const touchX = touch.clientX - rect.left;
+
+    rx = touchX - 50;
+
+    if (rx < 0) rx = 0;
+    if (rx > canvas.width - 100) rx = canvas.width - 100;
+});
+
+
+//je me suis inspiré de DX Ball pour ce déplacement que je trouve bien plus pratique.
+canvas.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+
+    rx = mouseX - 50;
+
+    if (rx < 0) rx = 0;
+    if (rx > canvas.width - 100) rx = canvas.width - 100;
+});
