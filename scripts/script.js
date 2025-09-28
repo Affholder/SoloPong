@@ -1,16 +1,16 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let x = canvas.width/2;                      // position de la balle (axe des abscisses X)
-let y = canvas.height/2;     // centrage vertical dans le canvas
+let x = canvas.width/2;
+let y = canvas.height/2;
 let dx = 3;
 let dy = -3;
 let rx = canvas.width/2 -50;
 let ry = canvas.height - 30;
-let rafId;                       // identifiant de la boucle d'animation
+let rafId;           // identifiant de la boucle d'animation
 
 function drawBall() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // efface l'écran
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#0095DD";
     //dessin de la balle
     ctx.beginPath();
@@ -58,6 +58,7 @@ function moveRectangle(event) {
         rx += 20;
     }
 }
+
 document.addEventListener('keydown', moveRectangle);
 
 function loop() {
@@ -74,12 +75,10 @@ loop();
 
 //             gestion des boutons
 
-// démarre l'animation si elle n'est pas déjà en cours
 const startButton = document.getElementById('startButton');
 startButton.addEventListener('click', () => {
     if (!rafId) {   // si l'animation n'est pas déjà en cours
-        dx = 3;
-        dy = -3;
+        startBall();
         rafId   = requestAnimationFrame(loop);
         compteurScore();
     }
@@ -97,8 +96,7 @@ reinitializeButton.addEventListener('click', () => {
 function resetBall() {
     x = canvas.width / 2;
     y = canvas.height / 2;
-    dx = 3;
-    dy = -3;
+    startBall();
     drawBall();
     scoreElement = document.getElementById('score');
     scoreElement.textContent = 'Score: 0';
@@ -134,3 +132,9 @@ function compteurScore() {
 
 }
 
+function startBall(){
+    const speed = 3;
+    const angle = Math.random() * Math.PI / 2 - Math.PI / 4;
+    dx = speed * Math.cos(angle);
+    dy = -speed * Math.sin(angle);
+}
