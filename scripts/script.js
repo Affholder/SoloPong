@@ -14,15 +14,31 @@ let speed = baseSpeed;
 
 function drawBall() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "#74098fff";
     //dessin de la balle
+    let gradient = ctx.createRadialGradient(x, y, 5, x, y, 15);
+    gradient.addColorStop(0, "#1592c4ff");
+    gradient.addColorStop(1, "#8409e9ff");
+
+    ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.arc(x, y, 15, 0, Math.PI * 2);
     ctx.fill();
 }
 
 function drawRectangle(){
-    ctx.fillStyle = "#0095DD";
+// Ombre légère pour la paddle
+    ctx.shadowColor = "rgba(0,0,0,0.3)";
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+
+    // Dégradé horizontal pour la paddle
+    let gradient = ctx.createLinearGradient(rx, ry, rx + 100, ry);
+    gradient.addColorStop(0, "#f700ffff");
+    gradient.addColorStop(1, "#0095DD");
+
+    ctx.fillStyle = gradient;
     ctx.fillRect(rx, ry, 100, 10);
 }
 
