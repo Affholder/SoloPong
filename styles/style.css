@@ -152,3 +152,49 @@ footer p {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(5px);
 }
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+    }
+    
+    #gameCanvas {
+        width: 90%;
+        max-width: 500px;
+        height: auto;
+    }
+    
+    #controls {
+        min-width: 250px;
+        padding: 20px;
+    }
+    
+    button {
+        min-width: 150px;
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+    
+    #score {
+        font-size: 1.5rem;
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    main {
+        gap: 20px;
+    }
+    
+    #controls {
+        min-width: 200px;
+        padding: 15px;
+        gap: 15px;
+    }
+}
