@@ -8,6 +8,9 @@ let dy = -3;
 let rx = canvas.width/2 -50;
 let ry = canvas.height - 30;
 let rafId;           // identifiant de la boucle d'animation
+let baseSpeed = 3;
+let maxSpeed = baseSpeed*5;
+let speed = baseSpeed;
 
 function drawBall() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -32,15 +35,18 @@ function update() {
     if (x > canvas.width - 15|| x < 15) {
         dx = -dx;
         dy += (Math.random()  - 0.5) * 2;
+        vitesseManagement();
     }
     if(y < 15) {
         dy = -dy;
         dx += (Math.random()  - 0.5) * 2;
+        vitesseManagement();
     }
 
     if (y > canvas.height - 30 - 15 && x > rx && x < rx + 100) {
         dy = -dy;
         dx += (Math.random()  - 0.5) * 2;
+        vitesseManagement();
     }
 
     if (y > canvas.height - 15){
@@ -137,4 +143,21 @@ function startBall(){
     const angle = Math.random() * Math.PI / 2 - Math.PI / 4;
     dx = speed * Math.cos(angle);
     dy = -speed * Math.sin(angle);
+    if (Math.random() < 0.5) {
+        dx = -dx;
+    }
+}
+
+function vitesseManagement(){
+    if (speed < maxSpeed){
+        speed *= 1.1;
+    }
+
+    if (speed > maxSpeed){
+        speed = maxSpeed;
+    }
+
+    const angle = Math.atan2(dy, dx);
+    dx = speed * Math.cos(angle);
+    dy = speed * Math.sin(angle);
 }
