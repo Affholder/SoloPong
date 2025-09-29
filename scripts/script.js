@@ -184,7 +184,7 @@ canvas.addEventListener('touchmove', (event) => {
     const rect = canvas.getBoundingClientRect();
     const touchX = touch.clientX - rect.left;
 
-    rx = touchX - 50;
+    rx = touchX;
 
     if (rx < 0) rx = 0;
     if (rx > canvas.width - 100) rx = canvas.width - 100;
